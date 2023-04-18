@@ -1,0 +1,14 @@
+import axios from 'axios';
+const API_KEY = '72bcdf1138bae3d92557a121dfa74cd8';
+export const fetchTrending = () => {
+  const response = axios.get(
+    `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`
+  );
+  return response;
+};
+export const fetchSearch = searchQuery => {
+  const response = axios.get(
+    `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchQuery}`
+  );
+  return response;
+};
