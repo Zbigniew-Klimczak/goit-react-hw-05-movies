@@ -1,6 +1,7 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import { Home } from '../pages/Home/Home';
 import { Movies } from '../pages/Movies/Movies';
+import { MovieDetails } from 'pages/MovieDetails/MovieDetails';
 import { fetchTrending } from '../utils/FetchFunc.jsx';
 import { useState, useEffect } from 'react';
 
@@ -22,6 +23,7 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<Home trendMovies={trendingMovies} />} />
         <Route path="/movies" element={<Movies />} />
+        <Route path="/movies/:movieId" element={<MovieDetails />} />
       </Routes>
     </div>
   );

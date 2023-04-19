@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 export const Home = ({ trendMovies }) => {
   return (
     <>
@@ -6,7 +7,9 @@ export const Home = ({ trendMovies }) => {
       <ul>
         {trendMovies.map(movie => (
           <li key={movie.id}>
-            {movie.title === undefined ? movie.name : movie.title}
+            <Link to={`/movies/${movie.id}`}>
+              {movie.title === undefined ? movie.name : movie.title}
+            </Link>
           </li>
         ))}
       </ul>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchSearch } from 'utils/FetchFunc';
 export const Movies = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -23,7 +24,9 @@ export const Movies = () => {
       <ul>
         {searchMovies.map(movie => (
           <li key={movie.id}>
-            {movie.title === undefined ? movie.name : movie.title}
+            <Link to={`/movies/${movie.id}`}>
+              {movie.title === undefined ? movie.name : movie.title}
+            </Link>
           </li>
         ))}
       </ul>

@@ -12,3 +12,9 @@ export const fetchSearch = searchQuery => {
   );
   return response;
 };
+export const fetchMovieId = movieId => {
+  const response = axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`
+  );
+  return response;
+};
