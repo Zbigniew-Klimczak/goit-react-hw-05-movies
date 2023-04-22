@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 
 export const App = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
+
   useEffect(() => {
     const fetchTrendMovies = async () => {
       const trendMovies = await fetchTrending();
@@ -14,6 +15,7 @@ export const App = () => {
     };
     fetchTrendMovies();
   }, []);
+
   return (
     <div>
       <nav>
@@ -22,7 +24,7 @@ export const App = () => {
       </nav>
       <Routes>
         <Route path="/" element={<Home trendMovies={trendingMovies} />} />
-        <Route path="/movies" element={<Movies />} />
+        <Route path={`/movies`} element={<Movies />} />
         <Route path="/movies/:movieId" element={<MovieDetails />} />
       </Routes>
     </div>

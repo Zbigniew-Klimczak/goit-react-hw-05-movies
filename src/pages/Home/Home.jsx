@@ -7,7 +7,7 @@ export const Home = ({ trendMovies }) => {
       <ul>
         {trendMovies.map(movie => (
           <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`}>
+            <Link to={`/movies/${movie.id}`} state={{ from: '/' }}>
               {movie.title === undefined ? movie.name : movie.title}
             </Link>
           </li>

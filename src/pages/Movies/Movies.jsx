@@ -1,14 +1,30 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import {
+  Link,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+} from 'react-router-dom';
 import { fetchSearch } from 'utils/FetchFunc';
 export const Movies = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchMovies, setSearchMovies] = useState([]);
-
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    const fetchSearchedMovies = async () => {
+      const queryParam = searchParams.get('query');
+      if (queryParam !== null) {
+        const searchResponse = await fetchSearch(queryParam);
+        setSearchMovies(searchResponse.data.results);
+      }
+    };
+    fetchSearchedMovies();
+  });
   const handleSubmit = async e => {
     e.preventDefault();
-    const searchResponse = await fetchSearch(searchValue);
-    setSearchMovies(searchResponse.data.results);
+    navigate(`/movies/?query=${searchValue}`);
   };
   return (
     <>
@@ -24,7 +40,7 @@ export const Movies = () => {
       <ul>
         {searchMovies.map(movie => (
           <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`}>
+            <Link to={`/movies/${movie.id}`} state={{ from: location }}>
               {movie.title === undefined ? movie.name : movie.title}
             </Link>
           </li>
