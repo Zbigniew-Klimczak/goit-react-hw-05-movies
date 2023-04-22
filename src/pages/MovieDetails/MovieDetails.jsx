@@ -1,7 +1,14 @@
-import { useParams, useLocation, useNavigate, Outlet } from 'react-router-dom';
+import {
+  useParams,
+  useLocation,
+  useNavigate,
+  Outlet,
+  Link,
+} from 'react-router-dom';
 import { fetchMovieId } from 'utils/FetchFunc';
 import { useState, useEffect } from 'react';
 import { ProgressBar } from 'react-loader-spinner';
+import Notiflix from 'notiflix';
 export const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState([]);
   const { movieId } = useParams();
@@ -11,18 +18,20 @@ export const MovieDetails = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchMovieDetails = async () => {
+      console.log('i');
       try {
         const movie = await fetchMovieId(movieIdState);
         setMovieDetails(movie.data);
       } catch (error) {
         console.log(error);
+        Notiflix.Notify.failure('Something went wrong :( Try again later...');
         navigate(location.state.from);
       } finally {
         setIsLoading(false);
       }
     };
     fetchMovieDetails();
-  });
+  }, [location.state.from, movieIdState, navigate]);
   const genresString = genres => {
     if (genres !== undefined) {
       let newArray = [];
@@ -73,6 +82,21 @@ export const MovieDetails = () => {
               <h4>Genres</h4>
               <p>{genresString(movieDetails.genres)}</p>
             </div>
+          </div>
+          <div>
+            <p>Additional information</p>
+            <ul>
+              <li>
+                <Link to="cast" state={{ from: location.state.from }}>
+                  Cast
+                </Link>
+              </li>
+              <li>
+                <Link to="reviews" state={{ from: location.state.from }}>
+                  Reviews
+                </Link>
+              </li>
+            </ul>
           </div>
           <Outlet />
         </>

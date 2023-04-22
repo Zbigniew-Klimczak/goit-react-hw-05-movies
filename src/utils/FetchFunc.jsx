@@ -18,3 +18,9 @@ export const fetchMovieId = movieId => {
   );
   return response;
 };
+export const fetchCredits = movieId => {
+  const response = axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}`
+  );
+  return response;
+};
