@@ -1,0 +1,21 @@
+.app {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.nav {
+  display: flex;
+  gap: 30px;
+  font-size: 20px;
+  font-weight: 500;
+}
+.navItem {
+  padding: 5px;
+  color: black;
+}
+.navItem:hover,
+.navItem:focus {
+  border: 1px solid black;
+}

@@ -5,11 +5,12 @@ import {
   Outlet,
   Link,
 } from 'react-router-dom';
+import css from './MovieDetails.module.css';
 import { fetchMovieId } from 'utils/FetchFunc';
 import { useState, useEffect } from 'react';
 import { ProgressBar } from 'react-loader-spinner';
 import Notiflix from 'notiflix';
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState([]);
   const { movieId } = useParams();
   const [movieIdState] = useState(movieId);
@@ -18,7 +19,6 @@ export const MovieDetails = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchMovieDetails = async () => {
-      console.log('i');
       try {
         const movie = await fetchMovieId(movieIdState);
         setMovieDetails(movie.data);
@@ -49,10 +49,14 @@ export const MovieDetails = () => {
       {isLoading === true && <ProgressBar width="100%" />}
       {isLoading === false && (
         <>
-          <button type="button" onClick={handleBackButton}>
+          <button
+            className={css.button}
+            type="button"
+            onClick={handleBackButton}
+          >
             Go back
           </button>
-          <div>
+          <div className={css.movie}>
             <img
               loading="lazy"
               src={
@@ -83,16 +87,24 @@ export const MovieDetails = () => {
               <p>{genresString(movieDetails.genres)}</p>
             </div>
           </div>
-          <div>
-            <p>Additional information</p>
-            <ul>
+          <div className={css.additionalInfo}>
+            <p className={css.paragraph}>Additional information</p>
+            <ul className={css.list}>
               <li>
-                <Link to="cast" state={{ from: location.state.from }}>
+                <Link
+                  className={css.listItem}
+                  to="cast"
+                  state={{ from: location.state.from }}
+                >
                   Cast
                 </Link>
               </li>
               <li>
-                <Link to="reviews" state={{ from: location.state.from }}>
+                <Link
+                  className={css.listItem}
+                  to="reviews"
+                  state={{ from: location.state.from }}
+                >
                   Reviews
                 </Link>
               </li>
@@ -104,3 +116,4 @@ export const MovieDetails = () => {
     </>
   );
 };
+export default MovieDetails;

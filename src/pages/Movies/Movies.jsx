@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import Notiflix from 'notiflix';
+import css from './Movies.module.css';
 import {
   Link,
   useNavigate,
@@ -6,7 +8,7 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import { fetchSearch } from 'utils/FetchFunc';
-export const Movies = () => {
+const Movies = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchMovies, setSearchMovies] = useState([]);
   const [searchParams] = useSearchParams();
@@ -18,29 +20,38 @@ export const Movies = () => {
       if (queryParam !== null) {
         const searchResponse = await fetchSearch(queryParam);
         setSearchMovies(searchResponse.data.results);
+        if (searchResponse.data.results.length === 0) {
+          Notiflix.Notify.info('No movies with that title');
+        }
       }
     };
     fetchSearchedMovies();
-  });
+  }, [searchParams]);
   const handleSubmit = async e => {
     e.preventDefault();
     navigate(`/movies/?query=${searchValue}`);
   };
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className={css.form} onSubmit={handleSubmit}>
         <input
+          className={css.input}
           type="text"
+          placeholder="Enter movie title"
           onChange={e => {
             setSearchValue(e.target.value.trim());
           }}
         />
         <button type="Submit">Search</button>
       </form>
-      <ul>
+      <ul className={css.list}>
         {searchMovies.map(movie => (
           <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`} state={{ from: location }}>
+            <Link
+              className={css.listItem}
+              to={`/movies/${movie.id}`}
+              state={{ from: location }}
+            >
               {movie.title === undefined ? movie.name : movie.title}
             </Link>
           </li>
@@ -49,3 +60,4 @@ export const Movies = () => {
     </>
   );
 };
+export default Movies;

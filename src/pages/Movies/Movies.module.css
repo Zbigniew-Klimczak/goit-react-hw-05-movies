@@ -1,0 +1,23 @@
+.form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.input {
+  width: 200px;
+  height: 20px;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+.listItem {
+  color: black;
+}
+.listItem:hover,
+.listItem:focus {
+  border: 1px solid black;
+}

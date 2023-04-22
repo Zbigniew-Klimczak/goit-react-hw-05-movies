@@ -1,0 +1,16 @@
+.title {
+  font-size: 35px;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+.listItem {
+  color: black;
+}
+.listItem:hover,
+.listItem:focus {
+  border: 1px solid black;
+}

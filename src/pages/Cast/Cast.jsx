@@ -2,7 +2,10 @@ import { fetchCredits } from 'utils/FetchFunc';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ProgressBar } from 'react-loader-spinner';
-export const Cast = () => {
+import Notiflix from 'notiflix';
+
+import css from './Cast.module.css';
+const Cast = () => {
   const { movieId } = useParams();
   const [castList, setCastList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -11,6 +14,9 @@ export const Cast = () => {
       try {
         const credits = await fetchCredits(movieId);
         setCastList(credits.data.cast);
+        if (credits.data.cast.length === 0) {
+          Notiflix.Notify.info('No information about the cast');
+        }
       } catch (error) {
         console.log(error);
       } finally {
@@ -18,7 +24,7 @@ export const Cast = () => {
       }
     };
     fetchCast();
-  }, [movieId]);
+  }, [movieId, castList]);
   return (
     <>
       {isLoading === true && <ProgressBar width="100%" />}
@@ -28,9 +34,9 @@ export const Cast = () => {
             <p>Unfortunatelly we don't have informations about the cast.</p>
           )}
           {castList.length > 0 && (
-            <ul>
+            <ul className={css.list}>
               {castList.map(castMember => (
-                <li key={castMember.id}>
+                <li className={css.listItem} key={castMember.id}>
                   <img
                     loading="lazy"
                     src={
@@ -40,7 +46,7 @@ export const Cast = () => {
                     }
                     alt={castMember.name}
                   />
-                  <p>{castMember.name}</p>
+                  <p className={css.name}>{castMember.name}</p>
                   <p>Character: {castMember.character}</p>
                 </li>
               ))}
@@ -51,3 +57,4 @@ export const Cast = () => {
     </>
   );
 };
+export default Cast;

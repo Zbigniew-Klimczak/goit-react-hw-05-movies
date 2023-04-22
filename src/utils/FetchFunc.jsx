@@ -24,3 +24,9 @@ export const fetchCredits = movieId => {
   );
   return response;
 };
+export const fetchReviews = movieId => {
+  const response = axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${API_KEY}`
+  );
+  return response;
+};
